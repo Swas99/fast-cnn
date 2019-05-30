@@ -389,4 +389,6 @@ if __name__ == '__main__':
         print ('loading mask file: ', mask_file_dir)
     #config.nr_tower = NR_GPU
     trainer = SyncMultiGPUTrainerParameterServer(NR_GPU, ps_device='gpu')
+    print ('config: ', config)
+    print ('trainer: ', trainer)
     launch_train_with_config(config, trainer)
