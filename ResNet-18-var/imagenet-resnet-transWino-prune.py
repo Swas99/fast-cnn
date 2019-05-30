@@ -27,8 +27,14 @@ test = False
 mask_dict = None
 use_mask = False
 
-
 class Model(ModelDesc):
+    def inputs(self):
+        """
+        Define all the inputs (with type, shape, name) that the graph will need.
+        """
+        return [tf.TensorSpec((None, IMAGE_SIZE, IMAGE_SIZE), tf.float32, 'input'),
+                tf.TensorSpec((None,), tf.int32, 'label')]
+
     def __init__(self, data_format='NHWC'):
         if data_format == 'NCHW':
             assert tf.test.is_gpu_available()
@@ -389,6 +395,5 @@ if __name__ == '__main__':
         print ('loading mask file: ', mask_file_dir)
     #config.nr_tower = NR_GPU
     trainer = SyncMultiGPUTrainerParameterServer(NR_GPU, ps_device='gpu')
-    print ('config: ', config)
-    print ('trainer: ', trainer)
     launch_train_with_config(config, trainer)
+
