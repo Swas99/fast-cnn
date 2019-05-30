@@ -6,3 +6,4 @@
 .DS_Store
 /build
 /pre_trained
+/ResNet-18-var/train_log
