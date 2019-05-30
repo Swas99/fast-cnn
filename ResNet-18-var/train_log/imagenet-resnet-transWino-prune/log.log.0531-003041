@@ -1,0 +1,6 @@
+[32m[0531 00:26:50 @logger.py:90][0m Argv: imagenet-resnet-transWino-prune.py --gpu 0 --data /home/swastik/starbuck/ILSVRC2012_images
+[32m[0531 00:26:50 @imagenet-resnet-transWino-prune.py:380][0m Running on 1 GPUs. Batch size per GPU: 64
+[32m[0531 00:26:50 @fs.py:101][0m [5m[31mWRN[0m Env var $TENSORPACK_DATASET not set, using /root/tensorpack_data for datasets.
+[32m[0531 00:26:51 @parallel.py:324][0m [MultiProcessRunnerZMQ] Will fork a dataflow more than one times. This assumes the datapoints are i.i.d.
+[32m[0531 00:26:51 @param.py:208][0m Use train_log/imagenet-resnet-transWino-prune/hyper.txt to set hyperparam: 'learning_rate'.
+[32m[0531 00:26:51 @interface.py:31][0m Automatically applying QueueInput on the DataFlow.
