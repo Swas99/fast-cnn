@@ -1,8 +1,7 @@
 import tensorflow as tf
 from .common import layer_register
 from ..utils.argtools import shape2d, shape4d
-
-from winograd2x2_conv import winograd2x2_conv
+ 
 
 __all__ = ['WinogradConv']
 
@@ -20,5 +19,15 @@ def WinogradConv(x, in_channel, out_channel, mask=None, W_init=None):
         W = W * m
     ######
 
-    return winograd2x2_conv.winograd2x2_conv(x, W)
+    return winograd2x2_conv(x, W)
 
+package_path = os.path.dirname(os.path.realpath(__file__))
+print('package_path: ',package_path)
+winograd2x2_conv_module = tf.load_op_library(os.path.join(package_path, 'winograd2x2_conv_op.so'))
+winograd2x2_conv_grad_module = tf.load_op_library(os.path.join(package_path, 'winograd2x2_conv_grad_op.so'))
+
+def winograd2x2_conv(I, W):
+	return winograd2x2_conv_module.winograd2x2_conv(I, W)
+
+def winograd2x2_conv_grad(i1, i2, grad):
+ 	return winograd2x2_conv_grad_module.winograd2x2_conv_grad(i1, i2, grad)
