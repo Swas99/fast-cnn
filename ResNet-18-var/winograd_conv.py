@@ -1,13 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
-# File: winograd_conv.py
-# Author: Xingyu Liu <liuxy610042@gmail.com>
-
 import tensorflow as tf
 from .common import layer_register
 from ..utils.argtools import shape2d, shape4d
 
-import winograd2x2_conv.winograd2x2_conv
+from winograd2x2_conv import winograd2x2_conv
 
 __all__ = ['WinogradConv']
 
@@ -25,5 +20,5 @@ def WinogradConv(x, in_channel, out_channel, mask=None, W_init=None):
         W = W * m
     ######
 
-    return winograd2x2_conv.winograd2x2_conv.winograd2x2_conv(x, W)
+    return winograd2x2_conv.winograd2x2_conv(x, W)
 
