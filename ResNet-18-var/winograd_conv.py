@@ -1,6 +1,7 @@
 import tensorflow as tf
 from .common import layer_register
 from ..utils.argtools import shape2d, shape4d
+import os
  
 
 __all__ = ['WinogradConv']
