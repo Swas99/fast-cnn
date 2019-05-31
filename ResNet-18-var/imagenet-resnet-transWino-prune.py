@@ -49,7 +49,7 @@ class Model(ModelDesc):
     #     return [InputDesc(tf.uint8, [None, INPUT_SHAPE, INPUT_SHAPE, 3], 'input'),
     #             InputDesc(tf.int32, [None], 'label')]
 
-    def _build_graph(self, inputs):
+    def build_graph(self, inputs):
         image, label = inputs
         image = tf.cast(image, tf.float32) * (1.0 / 255)
 
@@ -240,7 +240,7 @@ class Model(ModelDesc):
         add_moving_summary(loss, wd_cost)
         self.cost = tf.add_n([loss, wd_cost], name='cost')
 
-    def _get_optimizer(self):
+    def get_optimizer(self):
         lr = get_scalar_var('learning_rate', 0.1, summary=True)
         return tf.train.MomentumOptimizer(lr, 0.9, use_nesterov=True)
 
