@@ -49,8 +49,7 @@ class Model(ModelDesc):
     #     return [InputDesc(tf.uint8, [None, INPUT_SHAPE, INPUT_SHAPE, 3], 'input'),
     #             InputDesc(tf.int32, [None], 'label')]
 
-    def build_graph(self, inputs):
-        image, label = inputs
+    def build_graph(self, image, label):
         image = tf.cast(image, tf.float32) * (1.0 / 255)
 
         # Wrong mean/std are used for compatibility with pre-trained models.
