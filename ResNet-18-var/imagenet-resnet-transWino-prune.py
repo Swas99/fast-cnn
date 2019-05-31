@@ -19,8 +19,6 @@ from tensorpack.tfutils.symbolic_functions import *
 from tensorpack.tfutils.summary import *
 from tensorpack.utils.gpu import get_nr_gpu
 
-from winograd_conv import *
-from winograd_imtrans import *
 
 TOTAL_BATCH_SIZE = 64
 INPUT_SHAPE = 224
