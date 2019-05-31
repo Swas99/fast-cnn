@@ -7,7 +7,6 @@ from tensorflow.python.framework import ops
 
 # package_path = '/usr/local/lib/python2.7/dist-packages/tensorflow/core/user_ops/winograd2x2_transImage_cublas/winograd2x2_conv/'
 package_path = os.path.dirname(os.path.realpath(__file__))
-print('package_path: ',package_path)
 winograd2x2_conv_module = tf.load_op_library(os.path.join(package_path, 'winograd2x2_conv_op.so'))
 winograd2x2_conv_grad_module = tf.load_op_library(os.path.join(package_path, 'winograd2x2_conv_grad_op.so'))
 
