@@ -26,27 +26,28 @@ DEPTH = None
 test = False
 mask_dict = None
 use_mask = False
-IMAGE_SIZE = 224
 
 class Model(ModelDesc):
     def inputs(self):
         """
         Define all the inputs (with type, shape, name) that the graph will need.
         """
-        return [tf.TensorSpec((None, IMAGE_SIZE, IMAGE_SIZE), tf.float32, 'input'),
-                tf.TensorSpec((None,), tf.int32, 'label')]
+        # return [tf.TensorSpec((None, IMAGE_SIZE, IMAGE_SIZE), tf.float32, 'input'),
+        #         tf.TensorSpec((None,), tf.int32, 'label')]
+        return [InputDesc(tf.uint8, [None, INPUT_SHAPE, INPUT_SHAPE, 3], 'input'),
+                InputDesc(tf.int32, [None], 'label')]
 
     def __init__(self, data_format='NHWC'):
         if data_format == 'NCHW':
             assert tf.test.is_gpu_available()
         self.data_format = data_format
 
-    def _get_inputs(self):
-        # uint8 instead of float32 is used as input type to reduce copy overhead.
-        # It might hurt the performance a liiiitle bit.
-        # The pretrained models were trained with float32.
-        return [InputDesc(tf.uint8, [None, INPUT_SHAPE, INPUT_SHAPE, 3], 'input'),
-                InputDesc(tf.int32, [None], 'label')]
+    # def _get_inputs(self):
+    #     # uint8 instead of float32 is used as input type to reduce copy overhead.
+    #     # It might hurt the performance a liiiitle bit.
+    #     # The pretrained models were trained with float32.
+    #     return [InputDesc(tf.uint8, [None, INPUT_SHAPE, INPUT_SHAPE, 3], 'input'),
+    #             InputDesc(tf.int32, [None], 'label')]
 
     def _build_graph(self, inputs):
         image, label = inputs
