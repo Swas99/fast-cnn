@@ -22,7 +22,7 @@ def WinogradConv(x, in_channel, out_channel, mask=None, W_init=None):
 
     return winograd2x2_conv(x, W)
 
-package_path = os.path.dirname(os.path.realpath(__file__))
+package_path = '~swastik/code/fast-cnn/winograd2x2_conv'
 print('package_path: ',package_path)
 winograd2x2_conv_module = tf.load_op_library(os.path.join(package_path, 'winograd2x2_conv_op.so'))
 winograd2x2_conv_grad_module = tf.load_op_library(os.path.join(package_path, 'winograd2x2_conv_grad_op.so'))
