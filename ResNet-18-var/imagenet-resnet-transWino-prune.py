@@ -26,6 +26,7 @@ DEPTH = None
 test = False
 mask_dict = None
 use_mask = False
+IMAGE_SIZE = 224
 
 class Model(ModelDesc):
     def inputs(self):
