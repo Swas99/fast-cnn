@@ -32,10 +32,10 @@ class Model(ModelDesc):
         """
         Define all the inputs (with type, shape, name) that the graph will need.
         """
-        return [tf.TensorSpec((64, INPUT_SHAPE, INPUT_SHAPE, 3), tf.uint8, 'input'),
-                tf.TensorSpec((64,), tf.int32, 'label')]
-        # return [InputDesc(tf.uint8, [64, INPUT_SHAPE, INPUT_SHAPE, 3], 'input'),
-        #         InputDesc(tf.int32, [64], 'label')]
+        # return [tf.TensorSpec((64, INPUT_SHAPE, INPUT_SHAPE, 3), tf.uint8, 'input'),
+        #         tf.TensorSpec((64,), tf.int32, 'label')]
+        return [InputDesc(tf.uint8, [None, INPUT_SHAPE, INPUT_SHAPE, 3], 'input'),
+                InputDesc(tf.int32, [None], 'label')]
 
     def __init__(self, data_format='NHWC'):
         if data_format == 'NCHW':
@@ -124,7 +124,7 @@ class Model(ModelDesc):
             l_bra = BatchNorm('res2a_bn2a', l)
             l_bra = WinogradImTrans('WinogradImTrans_2a_2a', l_bra, tf.nn.relu)
             l_bra = WinogradConv('Winograd_W2a_2a', l_bra, 64, 64, mask=mask_dict['Winograd_W2a_2a/W'] if use_mask else None)
-            l_bra = BatchNorm('res2a_bn2b', l_bra)
+            l_bra = BatchNorm('res2a_bn2a', l_bra)
             l_bra = WinogradImTrans('WinogradImTrans_2a_2b', l_bra, tf.nn.relu)
             l_bra = WinogradConv('Winograd_W2a_2b', l_bra, 64, 64, mask=mask_dict['Winograd_W2a_2b/W'] if use_mask else None)
             l_bra = BatchNorm('res2a_bn2c', l_bra)
