@@ -121,10 +121,10 @@ class Model(ModelDesc):
             # l = BatchNorm('conv1_bn', l)
             l = MaxPooling('pool1', l, 3, stride=2, padding='SAME')
 
-            l_bra = BatchNorm('res2a_bn2a', l)
-            l_bra = WinogradImTrans('WinogradImTrans_2a_2a', l_bra, tf.nn.relu)
+            # l_bra = BatchNorm('res2a_bn2a', l)
+            # l_bra = WinogradImTrans('WinogradImTrans_2a_2a', l_bra, tf.nn.relu)
             # l_bra = WinogradConv('Winograd_W2a_2a', l_bra, 64, 64, mask=mask_dict['Winograd_W2a_2a/W'] if use_mask else None)
-            l_bra = BatchNorm('res2a_bn2b', l_bra)
+            l_bra = BatchNorm('res2a_bn2b', l)
             l_bra = WinogradImTrans('WinogradImTrans_2a_2b', l_bra, tf.nn.relu)
             l_bra = WinogradConv('Winograd_W2a_2b', l_bra, 64, 64, mask=mask_dict['Winograd_W2a_2b/W'] if use_mask else None)
             l_bra = BatchNorm('res2a_bn2c', l_bra)
