@@ -25,7 +25,7 @@ INPUT_SHAPE = 224
 DEPTH = None
 test = False
 mask_dict = None
-use_mask = False
+use_mask = True
 
 class Model(ModelDesc):
     def inputs(self):
@@ -51,7 +51,6 @@ class Model(ModelDesc):
 
     def build_graph(self, image, label):
         image = tf.cast(image, tf.float32) * (1.0 / 255)
-        tf.image.resize_images
         
         # Wrong mean/std are used for compatibility with pre-trained models.
         # Should actually add a RGB-BGR conversion here.
