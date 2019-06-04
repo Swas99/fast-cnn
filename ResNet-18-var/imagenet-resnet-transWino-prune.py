@@ -25,7 +25,7 @@ INPUT_SHAPE = 224
 DEPTH = None
 test = False
 mask_dict = None
-use_mask = True
+use_mask = False
 
 class Model(ModelDesc):
     def inputs(self):
