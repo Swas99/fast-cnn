@@ -32,8 +32,8 @@ class Model(ModelDesc):
         """
         Define all the inputs (with type, shape, name) that the graph will need.
         """
-        return [tf.TensorSpec((None, INPUT_SHAPE, INPUT_SHAPE, 3), tf.uint8, 'input'),
-                tf.TensorSpec((None,), tf.int32, 'label')]
+        return [tf.TensorSpec((64, INPUT_SHAPE, INPUT_SHAPE, 3), tf.uint8, 'input'),
+                tf.TensorSpec((64,), tf.int32, 'label')]
         # return [InputDesc(tf.uint8, [64, INPUT_SHAPE, INPUT_SHAPE, 3], 'input'),
         #         InputDesc(tf.int32, [64], 'label')]
 
