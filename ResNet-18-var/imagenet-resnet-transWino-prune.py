@@ -121,7 +121,7 @@ class Model(ModelDesc):
             # l = BatchNorm('conv1_bn', l)
             l = MaxPooling('pool1', l, 3, stride=2, padding='SAME')
 
-            print("l_bra", l_bra)
+            print("l", l)
             l_bra = BatchNorm('res2a_bn2a', l)
             print("l_bra", l_bra)
             l_bra = WinogradImTrans('WinogradImTrans_2a_2a', l_bra, tf.nn.relu)
