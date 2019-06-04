@@ -22,7 +22,7 @@ from tensorpack.utils.gpu import get_nr_gpu
 
 TOTAL_BATCH_SIZE = 64
 INPUT_SHAPE = 224
-DEPTH = 1
+DEPTH = None
 test = False
 mask_dict = None
 use_mask = False
@@ -51,7 +51,8 @@ class Model(ModelDesc):
 
     def build_graph(self, image, label):
         image = tf.cast(image, tf.float32) * (1.0 / 255)
-
+        image = tf.image.resize_images
+        
         # Wrong mean/std are used for compatibility with pre-trained models.
         # Should actually add a RGB-BGR conversion here.
         image_mean = tf.constant([0.485, 0.456, 0.406], dtype=tf.float32)
