@@ -34,8 +34,8 @@ class Model(ModelDesc):
         """
         # return [tf.TensorSpec((None, IMAGE_SIZE, IMAGE_SIZE), tf.float32, 'input'),
         #         tf.TensorSpec((None,), tf.int32, 'label')]
-        return [InputDesc(tf.uint8, [None, INPUT_SHAPE, INPUT_SHAPE, 3], 'input'),
-                InputDesc(tf.int32, [None], 'label')]
+        return [InputDesc(tf.uint8, [INPUT_SHAPE, INPUT_SHAPE, INPUT_SHAPE, 3], 'input'),
+                InputDesc(tf.int32, [INPUT_SHAPE], 'label')]
 
     def __init__(self, data_format='NHWC'):
         if data_format == 'NCHW':
