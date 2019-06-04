@@ -12,7 +12,7 @@ from tensorflow.python.framework import ops
 
 __all__ = ['WinogradImTrans']
 
-package_path = '/home/swastik/code/fast-cnn/winograd2x2_cublas/winograd2x2_conv'
+package_path = '/home/swastik/code/fast-cnn/winograd2x2_cublas/winograd2x2_imTrans'
 winograd2x2_imTrans_module = tf.load_op_library(os.path.join(package_path, 'winograd2x2_imTrans_op.so'))
 winograd2x2_imTrans_grad_module = tf.load_op_library(os.path.join(package_path, 'winograd2x2_imTrans_grad_op.so'))
 
