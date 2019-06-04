@@ -60,10 +60,6 @@ class Model(ModelDesc):
         if self.data_format == 'NCHW':
             image = tf.transpose(image, [0, 3, 1, 2])
 
-        print("image:", image.shape)
-        print("image:", image.get_shape)
-        print("image_:", image.get_shape())
-
         def shortcut(l, n_in, n_out, stride):
             if n_in != n_out:
                 return Conv2D('convshortcut', l, n_out, 1, stride=stride)
@@ -321,6 +317,7 @@ def get_config(fake=False, data_format='NHWC'):
 
     eval_freq = 5
 
+    print("dataset_train", dataset_train)
     return TrainConfig(
         model=Model(data_format=data_format),
         dataflow=dataset_train,
