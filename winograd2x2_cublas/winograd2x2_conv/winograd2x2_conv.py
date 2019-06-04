@@ -26,6 +26,7 @@ def _my_winograd2x2_shape(op):
 	H = nH * 2
 	W = nW * 2
 	K = shape2.dims[2]
+	print("_my_winograd2x2_shape", B, H, W, K)
 	return [tf.TensorShape([B, H, W, K])]
 
 @ops.RegisterGradient('Winograd2x2Conv')

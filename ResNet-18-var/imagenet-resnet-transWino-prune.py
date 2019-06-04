@@ -118,7 +118,7 @@ class Model(ModelDesc):
                 argscope([Conv2D, MaxPooling, GlobalAvgPooling, BatchNorm], data_format=self.data_format):
 
             l = Conv2D('conv1', image, 64, 7, stride=2, nl=tf.identity)
-            l = BatchNorm('conv1_bn', l)
+            # l = BatchNorm('conv1_bn', l)
             l = MaxPooling('pool1', l, 3, stride=2, padding='SAME')
 
             l_bra = BatchNorm('res2a_bn2a', l)
