@@ -31,6 +31,7 @@ def _my_winograd2x2_shape(op):
 
 @ops.RegisterGradient('Winograd2x2Conv')
 def _my_matmul_grad(op, grad_output):
+	print("_my_winograd2x2_shape", B, H, W, K)
  	input1 = op.inputs[0]
  	input2 = op.inputs[1]
  	grad1, grad2 = winograd2x2_conv_grad_module.winograd2x2_conv_grad(input1, input2, grad_output)
