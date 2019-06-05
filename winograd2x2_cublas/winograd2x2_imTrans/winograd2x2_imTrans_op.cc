@@ -34,6 +34,7 @@ public:
   explicit Winograd2x2ImTransCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    printf("swas_2\n");
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
     auto Input = I_tensor.flat<float>();
@@ -50,7 +51,7 @@ public:
     Tensor* O_tensor = NULL;
     OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
     auto Output = O_tensor->template flat<float>();
-
+    printf("swas_2\n");
     // Set all but the first element of the output tensor to 0.
 	Winograd2x2ImTransComputeLauncher(Input.data(), Output.data(), C, B, H, W, 1, 1); 
   }
@@ -63,6 +64,7 @@ public:
   explicit Winograd2x2ImTransOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    printf("swas_1\n");
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
 
@@ -70,12 +72,12 @@ public:
     int H = I_tensor.dim_size(1);
     int W = I_tensor.dim_size(2);
     int C = I_tensor.dim_size(3);
-	int n_patch_width = (W + 1) / 2;
-	int n_patch_height = (H + 1) / 2;
-	TensorShape output_shape = I_tensor.shape();
-	output_shape.set_dim(1, n_patch_width * n_patch_height);
-	output_shape.set_dim(2, 16);
-
+  	int n_patch_width = (W + 1) / 2;
+  	int n_patch_height = (H + 1) / 2;
+  	TensorShape output_shape = I_tensor.shape();
+  	output_shape.set_dim(1, n_patch_width * n_patch_height);
+  	output_shape.set_dim(2, 16);
+    printf("swas_1\n");
     // Create an output tensor
     Tensor* O_tensor = NULL;
     OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
