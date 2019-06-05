@@ -23,7 +23,8 @@ def WinogradImTrans(x, nl=tf.identity):
 
 def winograd2x2_imTrans(I):
     print("here")
-    print("rand: ", winograd2x2_imTrans_module.get_random(10, 99))
+    print "Dictionary form :", vars(winograd2x2_imTrans_module) 
+    print dir(winograd2x2_imTrans_module) 
     return winograd2x2_imTrans_module.winograd2x2_im_trans(I)
 
 def winograd2x2_imTrans_grad(grad):
