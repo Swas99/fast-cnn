@@ -44,8 +44,8 @@ public:
     int H = I_tensor.dim_size(1);
     int W = I_tensor.dim_size(2);
     int C = I_tensor.dim_size(3);
-	int n_patch_width = (W + 1) / 2;
-	int n_patch_height = (H + 1) / 2;
+    int n_patch_width = (W + 1) / 2;
+    int n_patch_height = (H + 1) / 2;
 	
     // Create an output tensor
     Tensor* O_tensor = NULL;
@@ -53,7 +53,7 @@ public:
     auto Output = O_tensor->template flat<float>();
     printf("swas_2\n");
     // Set all but the first element of the output tensor to 0.
-	Winograd2x2ImTransComputeLauncher(Input.data(), Output.data(), C, B, H, W, 1, 1); 
+	  Winograd2x2ImTransComputeLauncher(Input.data(), Output.data(), C, B, H, W, 1, 1); 
   }
 };
 

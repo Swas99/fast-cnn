@@ -26,6 +26,7 @@ def winograd2x2_imTrans(I):
     # print (I)
     # print (dir(winograd2x2_imTrans_module))
     # print (dir(winograd2x2_imTrans_grad_module))
+    print(winograd2x2_imTrans_module.get_random(999,99999))
     return winograd2x2_imTrans_module.winograd2x2_im_trans(I)
 
 def winograd2x2_imTrans_grad(grad):
