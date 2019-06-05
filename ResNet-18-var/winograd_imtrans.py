@@ -18,11 +18,11 @@ winograd2x2_imTrans_grad_module = tf.load_op_library(os.path.join(package_path, 
 
 @layer_register()
 def WinogradImTrans(x, nl=tf.identity):
-    print("here")
     return nl(winograd2x2_imTrans(x))
 
 
 def winograd2x2_imTrans(I):
+    print("here")
     return winograd2x2_imTrans_module.winograd2x2_im_trans(I)
 
 def winograd2x2_imTrans_grad(grad):
