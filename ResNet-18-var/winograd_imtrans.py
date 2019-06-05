@@ -25,6 +25,7 @@ def winograd2x2_imTrans(I):
     print("here")
     print (I)
     print (dir(winograd2x2_imTrans_module))
+    print (dir(winograd2x2_imTrans_grad_module))
     return winograd2x2_imTrans_module.winograd2x2_im_trans(I)
 
 def winograd2x2_imTrans_grad(grad):
