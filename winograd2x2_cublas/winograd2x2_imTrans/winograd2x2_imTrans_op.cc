@@ -90,8 +90,5 @@ REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans").Device(DEVICE_CPU), Winograd2
 /* returns a random number between base and max, inclusive */
 int get_random(int base, int max)
 {
-  if (randomized == FALSE){
-    randomize();
-  }
   return rand() % (max - base + 1) + base;
 }
