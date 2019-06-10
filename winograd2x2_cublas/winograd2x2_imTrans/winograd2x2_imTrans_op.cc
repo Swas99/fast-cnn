@@ -50,7 +50,7 @@ public:
     // OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
     // auto Output = O_tensor->template flat<float>();
     // // Set all but the first element of the output tensor to 0.
-	  Winograd2x2ImTransComputeLauncher(Input.data(), Output.data(), C, B, H, W, 1, 1); 
+	  // Winograd2x2ImTransComputeLauncher(Input.data(), Output.data(), C, B, H, W, 1, 1); 
   }
 };
 
