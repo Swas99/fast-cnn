@@ -16,7 +16,8 @@ limitations under the License.
 #include "tensorflow/core/framework/op.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/shape_inference.h"
-#include <assert.h> 
+#include <assert.h>
+#include <stdio.h>
 
 using namespace tensorflow;
 
@@ -33,23 +34,27 @@ public:
   explicit Winograd2x2ImTransCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
-    // // Grab the input tensor
-    // const Tensor& I_tensor = context->input(0);
-    // auto Input = I_tensor.flat<float>();
-    // // OP_REQUIRES(context, iA_tensor.dims()==2 && iB_tensor.dims()==2);
+    printf("%s\n", "hahahaha");
+   //  // Grab the input tensor
+   //  const Tensor& I_tensor = context->input(0);
+   //  auto Input = I_tensor.flat<float>();
+   //  // OP_REQUIRES(context, iA_tensor.dims()==2 && iB_tensor.dims()==2);
 
-    // int B = I_tensor.dim_size(0);
-    // int H = I_tensor.dim_size(1);
-    // int W = I_tensor.dim_size(2);
-    // int C = I_tensor.dim_size(3);
-    // int n_patch_width = (W + 1) / 2;
-    // int n_patch_height = (H + 1) / 2;
-	
-    // // Create an output tensor
-    // Tensor* O_tensor = NULL;
-    // OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
-    // auto Output = O_tensor->template flat<float>();
-    // // Set all but the first element of the output tensor to 0.
+   //  int B = I_tensor.dim_size(0);
+   //  int H = I_tensor.dim_size(1);
+   //  int W = I_tensor.dim_size(2);
+   //  int C = I_tensor.dim_size(3);
+   //  int n_patch_width = (W + 1) / 2;
+   //  int n_patch_height = (H + 1) / 2;
+	  // TensorShape output_shape = I_tensor.shape();
+   //  output_shape.set_dim(1, n_patch_width * n_patch_height);
+   //  output_shape.set_dim(2, 16);
+
+   //  // Create an output tensor
+   //  Tensor* O_tensor = NULL;
+   //  OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
+   //  auto Output = O_tensor->template flat<float>();
+   //  // Set all but the first element of the output tensor to 0.
 	  // Winograd2x2ImTransComputeLauncher(Input.data(), Output.data(), C, B, H, W, 1, 1); 
   }
 };
@@ -75,7 +80,10 @@ public:
   	output_shape.set_dim(2, 16);
     // Create an output tensor
     Tensor* O_tensor = NULL;
-    OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
+    OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &
+
+    output_shape.set_dim(1, n_patch_width * n_patch_height);
+    output_shape.set_dim(2, 16);));
 	printf("This CPU code. We don't need this\n");
 	exit(-1);
   }
