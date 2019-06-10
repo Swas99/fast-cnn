@@ -16,7 +16,6 @@ limitations under the License.
 #include "tensorflow/core/framework/op.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/shape_inference.h"
-#include <stdio.h>
 #include <assert.h> 
 
 using namespace tensorflow;
@@ -34,7 +33,6 @@ public:
   explicit Winograd2x2ImTransCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
-    printf("swas_2\n");
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
     auto Input = I_tensor.flat<float>();
@@ -51,7 +49,6 @@ public:
     Tensor* O_tensor = NULL;
     OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
     auto Output = O_tensor->template flat<float>();
-    printf("swas_2\n");
     // Set all but the first element of the output tensor to 0.
 	  Winograd2x2ImTransComputeLauncher(Input.data(), Output.data(), C, B, H, W, 1, 1); 
   }
@@ -64,7 +61,6 @@ public:
   explicit Winograd2x2ImTransOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
-    printf("swas_1\n");
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
 
@@ -77,7 +73,6 @@ public:
   	TensorShape output_shape = I_tensor.shape();
   	output_shape.set_dim(1, n_patch_width * n_patch_height);
   	output_shape.set_dim(2, 16);
-    printf("swas_1\n");
     // Create an output tensor
     Tensor* O_tensor = NULL;
     OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
@@ -87,10 +82,3 @@ public:
 };
 
 REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans").Device(DEVICE_CPU), Winograd2x2ImTransOp);
-
-
-/* returns a random number between base and max, inclusive */
-int get_random(int base, int max)
-{
-  return rand() % (max - base + 1) + base;
-}

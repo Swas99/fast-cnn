@@ -12,7 +12,6 @@
 template <typename T>
 __global__ void Winograd2x2ImTransCompute(const T *Input, T *Output, int C, int B, int H, int W, int pad_h, int pad_w)
 { 
-	printf("swas_4\n");
 	int bx = blockIdx.x; // w
 	int by = blockIdx.y; // h
 	int bz = blockIdx.z; // b 
@@ -132,8 +131,6 @@ __global__ void Winograd2x2ImTransCompute(const T *Input, T *Output, int C, int 
 
 	int offset = f_b * nH * nW * C + (by * nW + bx) * C + t;
 	int stride = B * nH * nW * C;
-
-	printf("swas_4\n");
 	
 	Output [ 0 * stride + offset ] = trans_input_patch_0;
 	Output [ 1 * stride + offset ] = trans_input_patch_1;
@@ -155,13 +152,11 @@ __global__ void Winograd2x2ImTransCompute(const T *Input, T *Output, int C, int 
 } 
 
 void Winograd2x2ImTransComputeLauncher(const float *Input, float *TransIm, int C, int B, int H, int W, int pad_h, int pad_w) {
-	printf("swas_3\n");
 	int n_patch_width = (W + 1 + 2 * pad_w - 4) / 2 + 1;
 	int n_patch_height = (H + 1 + 2 * pad_h - 4) / 2 + 1;
 	dim3 blockDim(C, 1, 1);
 	dim3 gridDim(n_patch_width, n_patch_height, B);
 	Winograd2x2ImTransCompute<float><<<gridDim, blockDim>>>(Input, TransIm, C, B, H, W, pad_h, pad_w);
-	printf("swas_3\n");
 }
 
 #endif
