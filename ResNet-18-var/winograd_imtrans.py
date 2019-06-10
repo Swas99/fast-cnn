@@ -23,7 +23,7 @@ def WinogradImTrans(x, nl=tf.identity):
 
 def winograd2x2_imTrans(I):
     # print("here")
-    # print (I)
+    print (I)
     # print (dir(winograd2x2_imTrans_module))
     # print (dir(winograd2x2_imTrans_grad_module))
     return winograd2x2_imTrans_module.winograd2x2_im_trans(I)
@@ -34,6 +34,7 @@ def winograd2x2_imTrans_grad(grad):
 
 @ops.RegisterShape('Winograd2x2ImTrans')
 def _my_winograd2x2_shape(op):
+    print("here1")
     shape = op.inputs[0].get_shape().with_rank(4)
     H = shape.dims[1]
     W = shape.dims[2]
@@ -43,6 +44,7 @@ def _my_winograd2x2_shape(op):
 
 @ops.RegisterGradient('Winograd2x2ImTrans')
 def _my_matmul_grad(op, grad_output):
+    print("here2")
     # input = op.inputs[0]
     grad = winograd2x2_imTrans_grad_module.winograd2x2_im_trans_grad(grad_output)
     return [grad]
