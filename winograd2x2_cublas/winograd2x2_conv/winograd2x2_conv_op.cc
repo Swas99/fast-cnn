@@ -35,35 +35,35 @@ public:
   explicit Winograd2x2ConvCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
- //    // Grab the input tensor
- //    const Tensor& I_tensor = context->input(0);
- //    const Tensor& W_tensor = context->input(1);
- //    auto Input = I_tensor.flat<float>();
- //    auto Weight = W_tensor.flat<float>();
- //    // OP_REQUIRES(context, iA_tensor.dims()==2 && iB_tensor.dims()==2);
+    // Grab the input tensor
+    const Tensor& I_tensor = context->input(0);
+    const Tensor& W_tensor = context->input(1);
+    auto Input = I_tensor.flat<float>();
+    auto Weight = W_tensor.flat<float>();
+    // OP_REQUIRES(context, iA_tensor.dims()==2 && iB_tensor.dims()==2);
 
- //    int B = I_tensor.dim_size(1);
- //    int nH= I_tensor.dim_size(2);
- //    int nW= I_tensor.dim_size(3);
- //    int C = I_tensor.dim_size(4);
- //    int K = W_tensor.dim_size(2);
+    int B = I_tensor.dim_size(1);
+    int nH= I_tensor.dim_size(2);
+    int nW= I_tensor.dim_size(3);
+    int C = I_tensor.dim_size(4);
+    int K = W_tensor.dim_size(2);
 	
- //    // Create an output tensor
- //    Tensor* O_tensor = NULL;
- //    OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{B, 2*nH, 2*nW, K}, &O_tensor));
- //    auto Output = O_tensor->template flat<float>();
+    // Create an output tensor
+    Tensor* O_tensor = NULL;
+    OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{B, 2*nH, 2*nW, K}, &O_tensor));
+    auto Output = O_tensor->template flat<float>();
 
-	// // Allocate temporary memory
- //    Tensor tmp_data_buffer_tensor;
- //    OP_REQUIRES_OK(context, context->allocate_temp(DT_FLOAT, TensorShape{16 * nH * nW * B * K}, &tmp_data_buffer_tensor));
- //    auto tmp_data_buffer = tmp_data_buffer_tensor.template flat<float>();
+	// Allocate temporary memory
+    Tensor tmp_data_buffer_tensor;
+    OP_REQUIRES_OK(context, context->allocate_temp(DT_FLOAT, TensorShape{16 * nH * nW * B * K}, &tmp_data_buffer_tensor));
+    auto tmp_data_buffer = tmp_data_buffer_tensor.template flat<float>();
 
- //    Tensor tmp_ptr_buffer_tensor;
- //    OP_REQUIRES_OK(context, context->allocate_temp(DT_INT64, TensorShape{3 * 16}, &tmp_ptr_buffer_tensor));
- //    auto tmp_ptr_buffer = tmp_ptr_buffer_tensor.template flat<long long>();
+    Tensor tmp_ptr_buffer_tensor;
+    OP_REQUIRES_OK(context, context->allocate_temp(DT_INT64, TensorShape{3 * 16}, &tmp_ptr_buffer_tensor));
+    auto tmp_ptr_buffer = tmp_ptr_buffer_tensor.template flat<long long>();
 
- //    // Set all but the first element of the output tensor to 0.
-	// Winograd2x2ConvComputeLauncher(Input.data(), Weight.data(), Output.data(), tmp_data_buffer.data(), tmp_ptr_buffer.data(), C, B, nH, nW, K, 1, 1); 
+    // Set all but the first element of the output tensor to 0.
+	Winograd2x2ConvComputeLauncher(Input.data(), Weight.data(), Output.data(), tmp_data_buffer.data(), tmp_ptr_buffer.data(), C, B, nH, nW, K, 1, 1); 
   }
 };
 

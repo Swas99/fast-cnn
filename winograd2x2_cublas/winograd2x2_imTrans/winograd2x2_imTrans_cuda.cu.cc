@@ -12,6 +12,7 @@
 template <typename T>
 __global__ void Winograd2x2ImTransCompute(const T *Input, T *Output, int C, int B, int H, int W, int pad_h, int pad_w)
 { 
+	printf("%s\n", "PPP");
 	int bx = blockIdx.x; // w
 	int by = blockIdx.y; // h
 	int bz = blockIdx.z; // b 
@@ -157,6 +158,7 @@ void Winograd2x2ImTransComputeLauncher(const float *Input, float *TransIm, int C
 	dim3 blockDim(C, 1, 1);
 	dim3 gridDim(n_patch_width, n_patch_height, B);
 	Winograd2x2ImTransCompute<float><<<gridDim, blockDim>>>(Input, TransIm, C, B, H, W, pad_h, pad_w);
+	printf("%s\n", "XXx");
 }
 
 #endif
