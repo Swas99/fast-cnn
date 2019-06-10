@@ -16,8 +16,9 @@ limitations under the License.
 #include "tensorflow/core/framework/op.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/shape_inference.h"
-#include <assert.h>
-#include <stdio.h>
+#include <assert.h> 
+#include <cstdio> 
+
 
 using namespace tensorflow;
 
@@ -34,7 +35,7 @@ public:
   explicit Winograd2x2ImTransCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
-    printf("%s\n", "hahahaha");
+   printf("%s\n", "ASDASD");
    //  // Grab the input tensor
    //  const Tensor& I_tensor = context->input(0);
    //  auto Input = I_tensor.flat<float>();
@@ -46,10 +47,7 @@ public:
    //  int C = I_tensor.dim_size(3);
    //  int n_patch_width = (W + 1) / 2;
    //  int n_patch_height = (H + 1) / 2;
-	  // TensorShape output_shape = I_tensor.shape();
-   //  output_shape.set_dim(1, n_patch_width * n_patch_height);
-   //  output_shape.set_dim(2, 16);
-
+	
    //  // Create an output tensor
    //  Tensor* O_tensor = NULL;
    //  OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
@@ -80,10 +78,7 @@ public:
   	output_shape.set_dim(2, 16);
     // Create an output tensor
     Tensor* O_tensor = NULL;
-    OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &
-
-    output_shape.set_dim(1, n_patch_width * n_patch_height);
-    output_shape.set_dim(2, 16);));
+    OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
 	printf("This CPU code. We don't need this\n");
 	exit(-1);
   }
