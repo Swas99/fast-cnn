@@ -16,7 +16,7 @@ limitations under the License.
 #include "tensorflow/core/framework/op.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/shape_inference.h"
-#include <cstdio>
+#include <stdio.h>
 #include <assert.h> 
 
 using namespace tensorflow;
@@ -35,7 +35,6 @@ public:
   explicit Winograd2x2ConvCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
-    printf("%s\n", "hohohoooho");
  //    // Grab the input tensor
  //    const Tensor& I_tensor = context->input(0);
  //    const Tensor& W_tensor = context->input(1);

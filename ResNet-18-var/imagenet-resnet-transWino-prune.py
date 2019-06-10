@@ -123,9 +123,9 @@ class Model(ModelDesc):
 
             print("l", l)
             l_bra = BatchNorm('res2a_bn2a', l)
-            print("BatchNorm:", l)
+            print("BatchNorm:", l_bra)
             l_bra = WinogradImTrans('WinogradImTrans_2a_2a', l_bra, tf.nn.relu)
-            print("WinogradImTrans:", l)
+            print("WinogradImTrans:", l_bra)
             l_bra = WinogradConv('Winograd_W2a_2a', l_bra, 64, 64, mask=mask_dict['Winograd_W2a_2a/W'] if use_mask else None)
             print("WinogradConv:", l_bra)
             l_bra = BatchNorm('res2a_bn2b', l_bra)
