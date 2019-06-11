@@ -206,5 +206,5 @@ with tf.Session(config=tf.ConfigProto()) as sess_3:
 	sess_3.run(tf.initialize_all_variables())
 	my_image_transform_result_num = sess_3.run(my_image_transform_result, {image_tf: image})
 
-print np.sum(np.abs(transformed_image_num - my_image_transform_result_num)) / (np.sum(np.abs(transformed_image_num)) + (np.sum(np.abs(my_image_transform_result_num))))
+# print np.sum(np.abs(transformed_image_num - my_image_transform_result_num)) / (np.sum(np.abs(transformed_image_num)) + (np.sum(np.abs(my_image_transform_result_num))))
 
