@@ -18,7 +18,7 @@ from tensorpack.utils.stats import RatioCounter
 from tensorpack.tfutils.symbolic_functions import *
 from tensorpack.tfutils.summary import *
 from tensorpack.utils.gpu import get_nr_gpu
-from winograd2x2_cublas.winograd2x2_imTrans import winograd2x2_imTrans_test
+from winograd2x2_cublas.winograd2x2_imTrans import winograd2x2_imTrans_test as wi
 
 TOTAL_BATCH_SIZE = 64
 INPUT_SHAPE = 224
@@ -124,7 +124,7 @@ class Model(ModelDesc):
             print("l", l)
             l_bra = BatchNorm('res2a_bn2a', l)
             print("BatchNorm:", l_bra)
-            l_bra = WinogradImTrans('WinogradImTrans_2a_2a', l_bra, tf.nn.relu)
+            l_bra = wi.WinogradImTrans('WinogradImTrans_2a_2a', l_bra, tf.nn.relu)
             print("WinogradImTrans:", l_bra)
             l_bra = WinogradConv('Winograd_W2a_2a', l_bra, 64, 64, mask=mask_dict['Winograd_W2a_2a/W'] if use_mask else None)
             print("WinogradConv:", l_bra)
