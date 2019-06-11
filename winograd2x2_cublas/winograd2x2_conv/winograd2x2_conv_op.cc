@@ -30,8 +30,8 @@ REGISTER_OP("Winograd2x2Conv")
       c->GetAttr("output_dim", &output_dim);
       c->set_output(0, c->input(0));
       printf("%d\n", output_dim);
-      printf(input(0));
-      printf(input);
+      printf(c->input(0));
+      printf(c->input);
       return Status::OK();
     })
     .Doc(R"doc(
