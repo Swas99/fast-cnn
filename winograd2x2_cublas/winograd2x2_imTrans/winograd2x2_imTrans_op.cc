@@ -25,10 +25,7 @@ using namespace tensorflow;
 REGISTER_OP("Winograd2x2ImTrans")
     .Input("input1: float")
     .Output("output: float")
-    .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
-      c->set_output(0, c->output(0));
-      return Status::OK();
-    })
+    .SetShapeFn(::tensorflow::shape_inference::UnchangedShape)
     .Doc(R"doc(
 )doc");
 
