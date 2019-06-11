@@ -125,7 +125,6 @@ class Model(ModelDesc):
             l_bra = BatchNorm('res2a_bn2a', l)
             print("BatchNorm:", l_bra)
             l_bra = WinogradImTrans('WinogradImTrans_2a_2a', l_bra, tf.nn.relu)
-            # l_bra = wi.WinogradImTrans(l_bra, tf.nn.relu)
             print("WinogradImTrans:", l_bra)
             l_bra = WinogradConv('Winograd_W2a_2a', l_bra, 64, 64, mask=mask_dict['Winograd_W2a_2a/W'] if use_mask else None)
             print("WinogradConv:", l_bra)
@@ -158,11 +157,16 @@ class Model(ModelDesc):
             l_bra = BatchNorm('res3a_bn2b', l_bra)
             l_bra = WinogradImTrans('WinogradImTrans_3a_2b', l_bra, tf.nn.relu)
             l_bra = WinogradConv('Winograd_W3a_2b', l_bra, 128, 128, mask=mask_dict['Winograd_W3a_2b/W'] if use_mask else None)
+            print("lbra_1", l_bra)
             l_bra = BatchNorm('res3a_bn2c', l_bra)
+            print("lbra_2", l_bra)
 
             l = tf.nn.relu(l)
+            print("l_1", l_bra)
             l = Conv2D('res3a_1', l, 128, 1, nl=tf.identity)
+            print("l_2", l_bra)
             l = BatchNorm('res3a_bn1', l)
+            print("l_3", l_bra)
             l = l + l_bra
 
             l_bra = BatchNorm('res3b_bn2a', l)
@@ -183,10 +187,14 @@ class Model(ModelDesc):
             l_bra = BatchNorm('res4a_bn2b', l_bra)
             l_bra = WinogradImTrans('WinogradImTrans_4a_2b', l_bra, tf.nn.relu)
             l_bra = WinogradConv('Winograd_W4a_2b', l_bra, 256, 256, mask=mask_dict['Winograd_W4a_2b/W'] if use_mask else None)
+            print("lbra_1", l_bra)
             l_bra = BatchNorm('res4a_bn2c', l_bra)
-
+            print("lbra_2", l_bra)
+            
             l = tf.nn.relu(l)
+            print("l_1", l_bra)
             l = Conv2D('res4a_1', l, 256, 1, nl=tf.identity)
+            print("l_2", l_bra)
             l = BatchNorm('res4a_bn1', l)
             l = l + l_bra
 
