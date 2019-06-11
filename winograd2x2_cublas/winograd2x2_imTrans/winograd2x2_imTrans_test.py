@@ -24,7 +24,7 @@ def kernel_transform_num(kernel):
     GgGT = np.transpose(GgGT, [2, 0, 1])
     return GgGT
 
-def WinogradImTrans(image, nl=tf.identity):
+def image_transform(image, nl=tf.identity):
     batch_size_d, image_width_d, image_height_d, input_channel_d = image.get_shape()
     batch_size = batch_size_d.value
     image_width = image_width_d.value

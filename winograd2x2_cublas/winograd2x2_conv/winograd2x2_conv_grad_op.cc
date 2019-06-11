@@ -26,6 +26,10 @@ REGISTER_OP("Winograd2x2ConvGrad")
     .Input("input3: float")
     .Output("output1: float")
     .Output("output2: float")
+    .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
+      c->set_output(0, c->input(0));
+      return Status::OK();
+    })
     .Doc(R"doc(
 )doc");
 
