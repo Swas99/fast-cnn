@@ -168,44 +168,43 @@ image = np.random.randn(batch_size, image_width, image_width, input_channel)
 # image = np.reshape(np.linspace(0.0, float(batch_size * image_width * image_width * input_channel - 1) * 0.1, batch_size * image_width * image_width * input_channel), [batch_size, image_width, image_width, input_channel])
 
 image_holder_1 = tf.placeholder(
-	tf.float32,
-	shape=(batch_size, image_width, image_width, input_channel))
+    tf.float32,
+    shape=(batch_size, image_width, image_width, input_channel))
 
 kernel = np.random.randn(3, 3, input_channel, output_channel)
 kernel_holder = tf.placeholder(
-	tf.float32,
-	shape=(3, 3, input_channel, output_channel))
+    tf.float32,
+    shape=(3, 3, input_channel, output_channel))
 
 conv_result = tf.nn.conv2d(image_holder_1, kernel_holder, [1, 1, 1, 1], padding='SAME')
 
 transformed_kernel_num = kernel_transform_num(kernel)
 transformed_kernel_holder = tf.placeholder(
-	tf.float32,
-	shape=(16, input_channel, output_channel))
+    tf.float32,
+    shape=(16, input_channel, output_channel))
 
 transformed_image = image_transform(image_holder_1, nl=tf.identity)
 my_conv_result = winograd_conv(image_holder_1, transformed_kernel_holder, transformed_image, output_channel, mask=None)
 
 with tf.Session() as sess_1:
-    import numpy as np
-	conv_result_num = sess_1.run(conv_result, {image_holder_1: image, kernel_holder: kernel})
-	my_conv_result_num = sess_1.run(my_conv_result, {image_holder_1: image, transformed_kernel_holder: transformed_kernel_num})
-	print np.sum(np.abs(conv_result_num - my_conv_result_num)) / (np.sum(np.abs(conv_result_num)) + (np.sum(np.abs(my_conv_result_num))))
+    conv_result_num = sess_1.run(conv_result, {image_holder_1: image, kernel_holder: kernel})
+    my_conv_result_num = sess_1.run(my_conv_result, {image_holder_1: image, transformed_kernel_holder: transformed_kernel_num})
+    # print np.sum(np.abs(conv_result_num - my_conv_result_num)) / (np.sum(np.abs(conv_result_num)) + (np.sum(np.abs(my_conv_result_num))))
 
 #----------------------ensure the conv is correct------------------
 
 with tf.Session() as sess_2:
-	transformed_image_num = sess_2.run(transformed_image, {image_holder_1: image})
-	transformed_image_num = np.reshape(transformed_image_num, [16, batch_size, n_image_width, n_image_width, input_channel])
-	# transformed_image_num = np.transpose(transformed_image_num, [1, 2, 3, 0, 4]) # (batch_size, n_image_width * n_image_width, 16, input_channel)
-	
+    transformed_image_num = sess_2.run(transformed_image, {image_holder_1: image})
+    transformed_image_num = np.reshape(transformed_image_num, [16, batch_size, n_image_width, n_image_width, input_channel])
+    # transformed_image_num = np.transpose(transformed_image_num, [1, 2, 3, 0, 4]) # (batch_size, n_image_width * n_image_width, 16, input_channel)
+    
 with tf.Session(config=tf.ConfigProto()) as sess_3:
-	with tf.device('/gpu:0'):
-		image_tf = tf.placeholder(dtype=tf.float32)
-		my_image_transform_result = winograd2x2_imTrans.winograd2x2_imTrans(image_tf)
+    with tf.device('/gpu:0'):
+        image_tf = tf.placeholder(dtype=tf.float32)
+        my_image_transform_result = winograd2x2_imTrans.winograd2x2_imTrans(image_tf)
 
-	sess_3.run(tf.initialize_all_variables())
-	my_image_transform_result_num = sess_3.run(my_image_transform_result, {image_tf: image})
+    sess_3.run(tf.initialize_all_variables())
+    my_image_transform_result_num = sess_3.run(my_image_transform_result, {image_tf: image})
 
 # print np.sum(np.abs(transformed_image_num - my_image_transform_result_num)) / (np.sum(np.abs(transformed_image_num)) + (np.sum(np.abs(my_image_transform_result_num))))
 
