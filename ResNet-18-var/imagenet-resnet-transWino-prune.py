@@ -162,11 +162,11 @@ class Model(ModelDesc):
             print("lbra_2", l_bra)
 
             l = tf.nn.relu(l)
-            print("l_1", l_bra)
+            print("l_1", l)
             l = Conv2D('res3a_1', l, 128, 1, nl=tf.identity)
-            print("l_2", l_bra)
+            print("l_2", l)
             l = BatchNorm('res3a_bn1', l)
-            print("l_3", l_bra)
+            print("l_3", l)
             l = l + l_bra
 
             l_bra = BatchNorm('res3b_bn2a', l)
