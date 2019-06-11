@@ -18,7 +18,7 @@ from tensorpack.utils.stats import RatioCounter
 from tensorpack.tfutils.symbolic_functions import *
 from tensorpack.tfutils.summary import *
 from tensorpack.utils.gpu import get_nr_gpu
-
+from winograd2x2_cublas.winograd2x2_imTrans import winograd2x2_imTrans_test
 
 TOTAL_BATCH_SIZE = 64
 INPUT_SHAPE = 224
