@@ -29,30 +29,30 @@ REGISTER_OP("Winograd2x2ImTransGrad")
 void Winograd2x2ImTransGradComputeLauncher(const float *Output_grad, float *Input_grad, int C, int B, int H, int W, int pad_h, int pad_w);
 
 class Winograd2x2ImTransGradCudaOp : public OpKernel {
- public:
-  explicit Winograd2x2ImTransGradCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
+ // public:
+ //  explicit Winograd2x2ImTransGradCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
-  void Compute(OpKernelContext* context) override {
-    // Grab the input tensor
-    const Tensor& O_grad_tensor = context->input(0);
-    auto Output_grad = O_grad_tensor.flat<float>();
-    // OP_REQUIRES(context, iA_tensor.dims()==2 && iB_tensor.dims()==2);
+ //  void Compute(OpKernelContext* context) override {
+ //    // Grab the input tensor
+ //    const Tensor& O_grad_tensor = context->input(0);
+ //    auto Output_grad = O_grad_tensor.flat<float>();
+ //    // OP_REQUIRES(context, iA_tensor.dims()==2 && iB_tensor.dims()==2);
 
-    int B = O_grad_tensor.dim_size(1);
-    int nH = O_grad_tensor.dim_size(2);
-    int nW = O_grad_tensor.dim_size(3);
-    int C = O_grad_tensor.dim_size(4);
-	int H = 2 * nH;
-	int W = 2 * nW;
+ //    int B = O_grad_tensor.dim_size(1);
+ //    int nH = O_grad_tensor.dim_size(2);
+ //    int nW = O_grad_tensor.dim_size(3);
+ //    int C = O_grad_tensor.dim_size(4);
+	// int H = 2 * nH;
+	// int W = 2 * nW;
 	
-    // Create an output tensor
-    Tensor* I_grad_tensor = NULL;
-    OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{B, H, W, C}, &I_grad_tensor));
-    auto Input_grad = I_grad_tensor->template flat<float>();
+ //    // Create an output tensor
+ //    Tensor* I_grad_tensor = NULL;
+ //    OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{B, H, W, C}, &I_grad_tensor));
+ //    auto Input_grad = I_grad_tensor->template flat<float>();
 
-    // Set all but the first element of the output tensor to 0.
-	Winograd2x2ImTransGradComputeLauncher(Output_grad.data(), Input_grad.data(), C, B, H, W, 1, 1); 
-  }
+ //    // Set all but the first element of the output tensor to 0.
+	// Winograd2x2ImTransGradComputeLauncher(Output_grad.data(), Input_grad.data(), C, B, H, W, 1, 1); 
+  // }
 };
 
 REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTransGrad").Device(DEVICE_GPU), Winograd2x2ImTransGradCudaOp);
@@ -62,23 +62,23 @@ class Winograd2x2ImTransGradOp : public OpKernel {
   explicit Winograd2x2ImTransGradOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
-	// Grab the input tensor
-    const Tensor& O_grad_tensor = context->input(0);
-    auto Output_grad = O_grad_tensor.flat<float>();
+	// // Grab the input tensor
+ //    const Tensor& O_grad_tensor = context->input(0);
+ //    auto Output_grad = O_grad_tensor.flat<float>();
 
-    int B = O_grad_tensor.dim_size(1);
-    int nH = O_grad_tensor.dim_size(2);
-    int nW = O_grad_tensor.dim_size(3);
-    int C = O_grad_tensor.dim_size(4);
-	int H = 2 * nH;
-	int W = 2 * nW;
+ //    int B = O_grad_tensor.dim_size(1);
+ //    int nH = O_grad_tensor.dim_size(2);
+ //    int nW = O_grad_tensor.dim_size(3);
+ //    int C = O_grad_tensor.dim_size(4);
+	// int H = 2 * nH;
+	// int W = 2 * nW;
 
-    Tensor* I_grad_tensor = NULL;
-    OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{B, H, W, C}, &I_grad_tensor));
-    auto Input_grad = I_grad_tensor->template flat<float>();
+ //    Tensor* I_grad_tensor = NULL;
+ //    OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{B, H, W, C}, &I_grad_tensor));
+ //    auto Input_grad = I_grad_tensor->template flat<float>();
 
-	printf("This CPU code. We don't need this\n");
-    exit(-1);
+	// printf("This CPU code. We don't need this\n");
+ //    exit(-1);
   }
 };
 
