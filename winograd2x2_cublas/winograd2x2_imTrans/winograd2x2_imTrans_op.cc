@@ -26,9 +26,7 @@ REGISTER_OP("Winograd2x2ImTrans")
     .Input("input1: float")
     .Output("output: float")
     .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
-      ::tensorflow::shape_inference::ShapeHandle input;
-      ::tensorflow::shape_inference::ShapeHandle output;
-      c->set_output(0, output);
+      c->set_output(0, c->input(2));
       return Status::OK();
     })
     .Doc(R"doc(
