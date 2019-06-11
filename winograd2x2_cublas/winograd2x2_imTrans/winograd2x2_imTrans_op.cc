@@ -28,10 +28,6 @@ REGISTER_OP("Winograd2x2ImTrans")
     .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
       ::tensorflow::shape_inference::ShapeHandle input;
       ::tensorflow::shape_inference::ShapeHandle output;
-      for (size_t i = 0; i < c->num_inputs(); ++i) {
-        TF_RETURN_IF_ERROR(c->WithRank(c->input(i), 2, &input));
-        TF_RETURN_IF_ERROR(c->Merge(output, input, &output));
-      }
       c->set_output(0, output);
       return Status::OK();
     })
