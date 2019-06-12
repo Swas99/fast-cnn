@@ -20,6 +20,7 @@ winograd2x2_conv_grad_module = tf.load_op_library(os.path.join(package_path, 'wi
 
 @layer_register()
 def WinogradConv(x, in_channel, out_channel, mask=None, W_init=None):
+    print (x)
 
     if W_init is None:
         W_init = tf.contrib.layers.variance_scaling_initializer(factor=2.0 * 9.0 / 32.0)
@@ -35,9 +36,11 @@ def WinogradConv(x, in_channel, out_channel, mask=None, W_init=None):
 
 
 def winograd2x2_conv(I, W):
+    print (I, W)
 	return winograd2x2_conv_module.winograd2x2_conv(I, W)
 
 def winograd2x2_conv_grad(i1, i2, grad):
+    print (i1, i2, grad)
  	return winograd2x2_conv_grad_module.winograd2x2_conv_grad(i1, i2, grad)
 
 @ops.RegisterShape('Winograd2x2Conv')
