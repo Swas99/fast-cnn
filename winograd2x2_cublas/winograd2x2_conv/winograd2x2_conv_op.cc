@@ -36,15 +36,13 @@ REGISTER_OP("Winograd2x2Conv")
       // // Tensor* O_tensor = NULL;
       // // OP_REQUIRES_OK(c, c->allocate_output(0, TensorShape{B, 2*nH, 2*nW, K}, &O_tensor));
 
-      ::tensorflow::shape_inference::ShapeHandle input = c->input(0);
-      ::tensorflow::shape_inference::ShapeHandle output = c->input(1);
-      
-      //I have no idea how to get the desired shape!
+      ::tensorflow::shape_inference::ShapeHandle I = c->input(0);
+      ::tensorflow::shape_inference::ShapeHandle W = c->input(1);
+      //I have no idea how to get the desired shape from I and W
+
       // c->set_output(0, c->Matrix(c->Dim(c->input(0), 0), 3));
       return Status::OK();
-    })
-    .Doc(R"doc(
-)doc");
+    });
 
 void Winograd2x2ConvComputeLauncher(const float *Input, const float *Weight, float *Output, float *tmp_data_buffer, const long long *tmp_ptr_buffer, int C, int B, int nH, int nW, int K, int pad_h, int pad_w);
 
@@ -53,7 +51,6 @@ public:
   explicit Winograd2x2ConvCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
-    printf("%s\n", "SWASTIK!!!");
 
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
