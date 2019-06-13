@@ -49,7 +49,6 @@ public:
 
   void Compute(OpKernelContext* context) override {
     printf("%s\n", "SWASTIK!!!");
-      throw "Division by zero condition!";
 
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
@@ -79,62 +78,43 @@ public:
     auto tmp_ptr_buffer = tmp_ptr_buffer_tensor.template flat<long long>();
 
     // Set all but the first element of the output tensor to 0.
-	Winograd2x2ConvComputeLauncher(Input.data(), Weight.data(), Output.data(), tmp_data_buffer.data(), tmp_ptr_buffer.data(), C, B, nH, nW, K, 1, 1); 
+	 Winograd2x2ConvComputeLauncher(Input.data(), Weight.data(), Output.data(), tmp_data_buffer.data(), tmp_ptr_buffer.data(), C, B, nH, nW, K, 1, 1); 
   }
 };
+REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv").Device(DEVICE_GPU), Winograd2x2ConvCudaOp);
 
 
-class ZeroOutOp : public OpKernel {
- public:
-  explicit ZeroOutOp(OpKernelConstruction* context) : OpKernel(context) {}
 
-  void Compute(OpKernelContext* context) override {
-      throw "Division by zero condition!";
-    // Grab the input tensor
-    const Tensor& input_tensor = context->input(0);
-    auto input = input_tensor.flat<int32>();
 
-    // Create an output tensor
-    Tensor* output_tensor = NULL;
-    OP_REQUIRES_OK(context, context->allocate_output(0, input_tensor.shape(),
-                                                     &output_tensor));
-    auto output_flat = output_tensor->flat<int32>();
 
-    // Set all but the first element of the output tensor to 0.
-    const int N = input.size();
-    for (int i = 1; i < N; i++) {
-      output_flat(i) = 0;
-    }
 
-    // Preserve the first input value if possible.
-    if (N > 0) output_flat(0) = input(0);
-  }
-};
 
-REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv").Device(DEVICE_GPU), ZeroOutOp);
-// REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv").Device(DEVICE_GPU), Winograd2x2ConvCudaOp);
 
-class Winograd2x2ConvOp : public OpKernel {
-public:
-  explicit Winograd2x2ConvOp(OpKernelConstruction* context) : OpKernel(context) {}
 
-  void Compute(OpKernelContext* context) override {
-      throw "Division by zero condition!";
-    // Grab the input tensor
-    const Tensor& I_tensor = context->input(0);
-    const Tensor& W_tensor = context->input(1);
 
-    int K = W_tensor.dim_size(0);
-    TensorShape output_shape = I_tensor.shape();
-    output_shape.set_dim(3, K);
 
-    // Create an output tensor
-    Tensor* O_tensor = NULL;
-    OP_REQUIRES_OK(context, context->allocate_output(0, output_shape,
-                                                     &O_tensor));
-	printf("This CPU code. We don't need this\n");
-	exit(-1);
-  }
-};
 
-REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv").Device(DEVICE_CPU), Winograd2x2ConvOp);
+// class Winograd2x2ConvOp : public OpKernel {
+// public:
+//   explicit Winograd2x2ConvOp(OpKernelConstruction* context) : OpKernel(context) {}
+
+//   void Compute(OpKernelContext* context) override {
+//       throw "Division by zero condition!";
+//     // Grab the input tensor
+//     const Tensor& I_tensor = context->input(0);
+//     const Tensor& W_tensor = context->input(1);
+
+//     int K = W_tensor.dim_size(0);
+//     TensorShape output_shape = I_tensor.shape();
+//     output_shape.set_dim(3, K);
+
+//     // Create an output tensor
+//     Tensor* O_tensor = NULL;
+//     OP_REQUIRES_OK(context, context->allocate_output(0, output_shape,
+//                                                      &O_tensor));
+// 	printf("This CPU code. We don't need this\n");
+// 	exit(-1);
+//   }
+// };
+
+// REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv").Device(DEVICE_CPU), Winograd2x2ConvOp);
