@@ -27,13 +27,7 @@ REGISTER_OP("Winograd2x2Conv")
     .Input("input2: float")
     .Output("output: float")
     .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
-      int output_dim;
-      c->GetAttr("output_dim", &output_dim);
-      c->set_output(0, c->input(0));
-      printf("%d\n", output_dim);
-      // std::cout<< c->input(0);
-      // printf(c->input(0));
-      // printf(c->input);
+      c->set_output(0, c->input(1));
       return Status::OK();
     })
     .Doc(R"doc(
@@ -46,6 +40,8 @@ public:
   explicit Winograd2x2ConvCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+    printf("%s\n", "SWASTIK!!!");
+    
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
     const Tensor& W_tensor = context->input(1);
