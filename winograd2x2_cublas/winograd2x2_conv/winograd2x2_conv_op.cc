@@ -41,7 +41,7 @@ REGISTER_OP("Winograd2x2Conv")
     .Doc(R"doc(
 )doc");
 
-void Winograd2x2ConvComputeLauncher(const float *Input, const float *Weight, float *Output, float *tmp_data_buffer, const long long *tmp_ptr_buffer, int C, int B, int nH, int nW, int K, int pad_h, int pad_w);
+// void Winograd2x2ConvComputeLauncher(const float *Input, const float *Weight, float *Output, float *tmp_data_buffer, const long long *tmp_ptr_buffer, int C, int B, int nH, int nW, int K, int pad_h, int pad_w);
 
 class Winograd2x2ConvCudaOp : public OpKernel {
 public:
