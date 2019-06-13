@@ -34,6 +34,7 @@ public:
   explicit Winograd2x2ConvCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+      printf("This line is not printed on the console\n");
 
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
@@ -66,7 +67,7 @@ public:
 	 Winograd2x2ConvComputeLauncher(Input.data(), Weight.data(), Output.data(), tmp_data_buffer.data(), tmp_ptr_buffer.data(), C, B, nH, nW, K, 1, 1); 
   }
 };
-REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv").Device(DEVICE_GPU), Winograd2x2ConvCudaOp);
+REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv"), Winograd2x2ConvCudaOp);
 
 
 
