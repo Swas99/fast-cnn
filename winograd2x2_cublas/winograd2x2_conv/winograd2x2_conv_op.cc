@@ -27,21 +27,24 @@ REGISTER_OP("Winograd2x2Conv")
     .Input("input2: float")
     .Output("output: float")
     .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
-      // const Tensor& I_tensor = c->input(0);
-      // const Tensor& W_tensor = c->input(1);
-      // int B = c->input(0).dim_size(1);
-      // int nH= c->input(0).dim_size(2);
-      // int nW= c->input(0).dim_size(3);
-      // int K = c->input(1).dim_size(2);
-      // Tensor* O_tensor = NULL;
-      // OP_REQUIRES_OK(c, c->allocate_output(0, TensorShape{B, 2*nH, 2*nW, K}, &O_tensor));
-      c->set_output(0, c->input(0));
-      return Status::OK();
+      // // const Tensor& I_tensor = c->input(0);
+      // // const Tensor& W_tensor = c->input(1);
+      // // int B = c->input(0).dim_size(1);
+      // // int nH= c->input(0).dim_size(2);
+      // // int nW= c->input(0).dim_size(3);
+      // // int K = c->input(1).dim_size(2);
+      // // Tensor* O_tensor = NULL;
+      // // OP_REQUIRES_OK(c, c->allocate_output(0, TensorShape{B, 2*nH, 2*nW, K}, &O_tensor));
+      
+      // ::tensorflow::shape_inference::ShapeHandle input = c->input(0);
+      // ::tensorflow::shape_inference::ShapeHandle output = c->input(1);
+      // c->set_output(0, c->Matrix(c->Dim(c->input(0), 0), 3));
+      // return Status::OK();
     })
     .Doc(R"doc(
 )doc");
 
-// void Winograd2x2ConvComputeLauncher(const float *Input, const float *Weight, float *Output, float *tmp_data_buffer, const long long *tmp_ptr_buffer, int C, int B, int nH, int nW, int K, int pad_h, int pad_w);
+void Winograd2x2ConvComputeLauncher(const float *Input, const float *Weight, float *Output, float *tmp_data_buffer, const long long *tmp_ptr_buffer, int C, int B, int nH, int nW, int K, int pad_h, int pad_w);
 
 class Winograd2x2ConvCudaOp : public OpKernel {
 public:
@@ -78,7 +81,7 @@ public:
     auto tmp_ptr_buffer = tmp_ptr_buffer_tensor.template flat<long long>();
 
     // Set all but the first element of the output tensor to 0.
-	 // Winograd2x2ConvComputeLauncher(Input.data(), Weight.data(), Output.data(), tmp_data_buffer.data(), tmp_ptr_buffer.data(), C, B, nH, nW, K, 1, 1); 
+	 Winograd2x2ConvComputeLauncher(Input.data(), Weight.data(), Output.data(), tmp_data_buffer.data(), tmp_ptr_buffer.data(), C, B, nH, nW, K, 1, 1); 
   }
 };
 REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv").Device(DEVICE_GPU), Winograd2x2ConvCudaOp);
