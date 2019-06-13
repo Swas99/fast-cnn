@@ -36,7 +36,6 @@ REGISTER_OP("Winograd2x2Conv")
       // Tensor* O_tensor = NULL;
       // OP_REQUIRES_OK(c, c->allocate_output(0, TensorShape{B, 2*nH, 2*nW, K}, &O_tensor));
       c->set_output(0, c->input(0));
-      throw "Division by zero condition!";
       return Status::OK();
     })
     .Doc(R"doc(
@@ -50,6 +49,7 @@ public:
 
   void Compute(OpKernelContext* context) override {
     printf("%s\n", "SWASTIK!!!");
+      throw "Division by zero condition!";
 
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
@@ -119,6 +119,7 @@ public:
   explicit Winograd2x2ConvOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+      throw "Division by zero condition!";
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
     const Tensor& W_tensor = context->input(1);
