@@ -39,6 +39,7 @@ public:
   explicit Winograd2x2ImTransCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
+      throw "Division by zero condition!";
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
     auto Input = I_tensor.flat<float>();
@@ -50,17 +51,30 @@ public:
     int C = I_tensor.dim_size(3);
     int n_patch_width = (W + 1) / 2;
     int n_patch_height = (H + 1) / 2;
-	
+  
     // Create an output tensor
     Tensor* O_tensor = NULL;
     OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{16, B, n_patch_height, n_patch_width, C}, &O_tensor));
     auto Output = O_tensor->template flat<float>();
     // Set all but the first element of the output tensor to 0.
-	  Winograd2x2ImTransComputeLauncher(Input.data(), Output.data(), C, B, H, W, 1, 1); 
+    Winograd2x2ImTransComputeLauncher(Input.data(), Output.data(), C, B, H, W, 1, 1); 
   }
 };
 
-REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans").Device(DEVICE_GPU), Winograd2x2ImTransCudaOp);
+
+class xxx : public OpKernel {
+public:
+  explicit xxx(OpKernelConstruction* context) : OpKernel(context) {}
+
+  void Compute(OpKernelContext* context) override {
+      printf("xxx!!!!\n"); 
+  }
+};
+
+
+
+REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans").Device(DEVICE_GPU), xxx);
+// REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans").Device(DEVICE_GPU), Winograd2x2ImTransCudaOp);
 
 class Winograd2x2ImTransOp : public OpKernel {
 public:
@@ -87,4 +101,4 @@ public:
   }
 };
 
-REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans").Device(DEVICE_CPU), Winograd2x2ImTransOp);
+// REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans").Device(DEVICE_CPU), Winograd2x2ImTransOp);
