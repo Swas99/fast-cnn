@@ -25,24 +25,7 @@ using namespace tensorflow;
 REGISTER_OP("Winograd2x2Conv")
     .Input("input1: float")
     .Input("input2: float")
-    .Output("output: float")
-    .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
-      // // const Tensor& I_tensor = c->input(0);
-      // // const Tensor& W_tensor = c->input(1);
-      // // int B = c->input(0).dim_size(1);
-      // // int nH= c->input(0).dim_size(2);
-      // // int nW= c->input(0).dim_size(3);
-      // // int K = c->input(1).dim_size(2);
-      // // Tensor* O_tensor = NULL;
-      // // OP_REQUIRES_OK(c, c->allocate_output(0, TensorShape{B, 2*nH, 2*nW, K}, &O_tensor));
-
-      ::tensorflow::shape_inference::ShapeHandle I = c->input(0);
-      ::tensorflow::shape_inference::ShapeHandle W = c->input(1);
-      //I have no idea how to get the desired shape from I and W
-
-      // c->set_output(0, c->Matrix(c->Dim(c->input(0), 0), 3));
-      return Status::OK();
-    });
+    .Output("output: float");
 
 void Winograd2x2ConvComputeLauncher(const float *Input, const float *Weight, float *Output, float *tmp_data_buffer, const long long *tmp_ptr_buffer, int C, int B, int nH, int nW, int K, int pad_h, int pad_w);
 
