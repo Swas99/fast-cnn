@@ -2,6 +2,7 @@
 #define EIGEN_USE_GPU
 // #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include <cublas_v2.h>
+#include <stdio.h>
 
 
 // dim3 threadsPerBlock(C)
@@ -12,7 +13,8 @@
 template <typename T>
 __global__ void Output_transform(const T *Product, T *Output, int C, int B, int nH, int nW, int K, int pad_h, int pad_w)
 {
-      throw "Division by zero condition!";
+    
+    printf("%s\n", "SWASTIK!!Output_transform!");
 	int bx = blockIdx.x; // w
 	int by = blockIdx.y; // h
 	int bz = blockIdx.z; // b 
@@ -64,7 +66,7 @@ __global__ void assign(const float *Input, const float *Weight, float *tmp_data_
 // Weight = (16, C, K)
 void Winograd2x2ConvComputeLauncher(const float *Input, const float *Weight, float *Output, float *tmp_data_buffer, const long long *tmp_ptr_buffer, int C, int B, int nH, int nW, int K, int pad_h, int pad_w) {
 
-      throw "Division by zero condition!";
+    printf("%s\n", "SWASTIK!!Winograd2x2ConvComputeLauncher!");
 	const float** Input_ptrs_gpu_ = (const float **)(tmp_ptr_buffer);
 	const float** Weight_ptrs_gpu_ = (const float **)(tmp_ptr_buffer + 16);
 	float** tmp_product_ptrs_gpu_ = (float **)(tmp_ptr_buffer + 16 * 2);
