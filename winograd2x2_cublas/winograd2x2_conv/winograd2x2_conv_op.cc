@@ -78,7 +78,7 @@ public:
     auto tmp_ptr_buffer = tmp_ptr_buffer_tensor.template flat<long long>();
 
     // Set all but the first element of the output tensor to 0.
-	 Winograd2x2ConvComputeLauncher(Input.data(), Weight.data(), Output.data(), tmp_data_buffer.data(), tmp_ptr_buffer.data(), C, B, nH, nW, K, 1, 1); 
+	 // Winograd2x2ConvComputeLauncher(Input.data(), Weight.data(), Output.data(), tmp_data_buffer.data(), tmp_ptr_buffer.data(), C, B, nH, nW, K, 1, 1); 
   }
 };
 REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv").Device(DEVICE_GPU), Winograd2x2ConvCudaOp);
