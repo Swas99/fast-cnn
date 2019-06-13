@@ -35,11 +35,13 @@ REGISTER_OP("Winograd2x2Conv")
       // // int K = c->input(1).dim_size(2);
       // // Tensor* O_tensor = NULL;
       // // OP_REQUIRES_OK(c, c->allocate_output(0, TensorShape{B, 2*nH, 2*nW, K}, &O_tensor));
+
+      ::tensorflow::shape_inference::ShapeHandle input = c->input(0);
+      ::tensorflow::shape_inference::ShapeHandle output = c->input(1);
       
-      // ::tensorflow::shape_inference::ShapeHandle input = c->input(0);
-      // ::tensorflow::shape_inference::ShapeHandle output = c->input(1);
+      //I have no idea how to get the desired shape!
       // c->set_output(0, c->Matrix(c->Dim(c->input(0), 0), 3));
-      // return Status::OK();
+      return Status::OK();
     })
     .Doc(R"doc(
 )doc");
