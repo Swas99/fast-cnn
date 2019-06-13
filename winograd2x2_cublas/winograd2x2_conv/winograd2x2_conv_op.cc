@@ -66,7 +66,7 @@ public:
 	 Winograd2x2ConvComputeLauncher(Input.data(), Weight.data(), Output.data(), tmp_data_buffer.data(), tmp_ptr_buffer.data(), C, B, nH, nW, K, 1, 1); 
   }
 };
-REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv"), Winograd2x2ConvCudaOp);
+REGISTER_KERNEL_BUILDER(Name("Winograd2x2Conv").Device(DEVICE_GPU), Winograd2x2ConvCudaOp);
 
 
 

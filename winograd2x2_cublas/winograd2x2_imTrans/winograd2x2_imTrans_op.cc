@@ -27,11 +27,9 @@ REGISTER_OP("Winograd2x2ImTrans")
     .Output("output: float")
     .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
       c->set_output(0, c->input(0));
-      printf("909\n");
+      printf("This line is printed on the console\n");
       return Status::OK();
-    })
-    .Doc(R"doc(
-)doc");
+    });
 
 void Winograd2x2ImTransComputeLauncher(const float *Input, float *TransIm, int C, int B, int H, int W, int pad_h, int pad_w);
 
@@ -40,7 +38,11 @@ public:
   explicit Winograd2x2ImTransCudaOp(OpKernelConstruction* context) : OpKernel(context) {}
 
   void Compute(OpKernelContext* context) override {
-      throw "Division by zero condition!";
+      printf("This line is not printed on the console\n");
+
+      //Nor is the below exception thrown
+      throw "THROW THIS";
+
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
     auto Input = I_tensor.flat<float>();
@@ -62,20 +64,7 @@ public:
   }
 };
 
-
-class xxx : public OpKernel {
-public:
-  explicit xxx(OpKernelConstruction* context) : OpKernel(context) {}
-
-  void Compute(OpKernelContext* context) override {
-      printf("xxx!!!!\n"); 
-  }
-};
-
-
-
-REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans").Device(DEVICE_GPU), xxx);
-// REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans").Device(DEVICE_GPU), Winograd2x2ImTransCudaOp);
+REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans_").Device(DEVICE_GPU), Winograd2x2ImTransCudaOp);
 
 class Winograd2x2ImTransOp : public OpKernel {
 public:
@@ -102,4 +91,4 @@ public:
   }
 };
 
-// REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans").Device(DEVICE_CPU), Winograd2x2ImTransOp);
+REGISTER_KERNEL_BUILDER(Name("Winograd2x2ImTrans_").Device(DEVICE_CPU), Winograd2x2ImTransOp);
