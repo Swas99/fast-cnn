@@ -27,7 +27,15 @@ REGISTER_OP("Winograd2x2Conv")
     .Input("input2: float")
     .Output("output: float")
     .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
-      c->set_output(0, c->input(1));
+      const Tensor& I_tensor = context->input(0);
+      const Tensor& W_tensor = context->input(1);
+      int B = I_tensor.dim_size(1);
+      int nH= I_tensor.dim_size(2);
+      int nW= I_tensor.dim_size(3);
+      int K = W_tensor.dim_size(2);
+      Tensor* O_tensor = NULL;
+      OP_REQUIRES_OK(context, context->allocate_output(0, TensorShape{B, 2*nH, 2*nW, K}, &O_tensor));
+      c->set_output(0, O_tensor);
       return Status::OK();
     })
     .Doc(R"doc(
@@ -41,7 +49,7 @@ public:
 
   void Compute(OpKernelContext* context) override {
     printf("%s\n", "SWASTIK!!!");
-    
+
     // Grab the input tensor
     const Tensor& I_tensor = context->input(0);
     const Tensor& W_tensor = context->input(1);
